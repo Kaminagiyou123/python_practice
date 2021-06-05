@@ -1,0 +1,4 @@
+name,age,university,degress
+rolf,25,mit,comuter science
+jose,90,oxford,computing
+anna,30,cambridge,physic
