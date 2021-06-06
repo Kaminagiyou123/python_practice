@@ -29,21 +29,21 @@ def menu():
     user_input=input(USER_CHOICE)
   
 
-def prompt_add_book():
+def prompt_add_book()->None:
  name=input("Please enter a new book name: ")
  author=input("Please enter the author of the book: ")
  database.add_book(name, author)
  
-def list_books():
+def list_books()->None:
  books=database.get_all_books()
  for book in books:
    read= "YES" if book['read'] else "NO"
    print(f"{book['name']} by {book['author']},read: {read}")
-def prompt_read_book():
+def prompt_read_book()->None:
  name=input("Please enter the book name you read: ")
  database.mark_book_as_read(name)
  
-def prompt_delete_book():
+def prompt_delete_book()->None:
  name=input("Please enter the book name you want to delete: ")
  database.delete_book(name)
  
