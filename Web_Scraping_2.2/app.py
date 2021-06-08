@@ -1,9 +1,19 @@
 import requests
+import logging
 
 from pages.all_books_page import AllBookPage
 
-page_cotent=requests.get("https://books.toscrape.com/").content;
 
+logging.basicConfig(format='%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+                    datefmt='%d-%m-%Y %H:%M:%S',
+                    level=logging.INFO,
+                    filename='logs.txt')
+
+logger=logging.getLogger('scraping')
+
+logger.debug("Loading books list...")
+
+page_cotent=requests.get("https://books.toscrape.com/").content;
 page=AllBookPage(page_cotent)
 
 books=page.book;
