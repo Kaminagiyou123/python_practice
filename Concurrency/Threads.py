@@ -1,27 +1,47 @@
+from concurrent.futures.process import ProcessPoolExecutor
 import time
-
-from concurrent.futures import ThreadPoolExecutor
-
+from concurrent.futures import ProcessPoolExecutor
+from multiprocessing import Process
+ 
+ 
 def ask_user():
- user_input=input("Enter your name: ")
- great=f"Hello,{user_input}"
- print(great)
+    start = time.time()
+    user_input = input('Enter your name: ')
+    greet = f'Hello, {user_input}'
+    print(greet)
+    print(f'ask_user, {time.time() - start}')
+ 
  
 def complex_calculation():
- print("start calculating...")
- [x**2 for x in range (20000000)]
+    start = time.time()
+    print('Started calculating...')
+    [x ** 2 for x in range(20000000)]
+    print(f'complex_calculation, {time.time() - start}')
+
+ 
+ 
+if __name__ == '__main__':
+    start = time.time()
+    ask_user()
+    complex_calculation()
+    print(f'Single thread total time: {time.time() - start}')
+    
+    start = time.time()
+    process = Process(target=complex_calculation)
+    process.start()
+    ask_user()
+    process.join()
+    print(f'Two process total time: {time.time() - start}')
+ 
+if __name__ == '__main__':
+    start = time.time()
+    with ProcessPoolExecutor (max_workers=2) as pool:
+     pool.submit(complex_calculation)
+     pool.submit(complex_calculation)
+    print(f'Single thread total time: {time.time() - start}')
+ 
   
-
-start=time.time()  
-ask_user()
-complex_calculation()
-print(f'Single thread total time: {time.time()-start}')
-
-
-
-start=time.time() 
-with ThreadPoolExecutor(max_workers=2) as pool:
- pool.submit(complex_calculation)
- pool.submit(ask_user)
-
-print(f'Single thread total time: {time.time()-start}')
+    
+ 
+ 
+ 
