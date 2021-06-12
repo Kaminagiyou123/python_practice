@@ -16,10 +16,11 @@ ask_user()
 complex_calculation()
 print(f'Single thread total time: {time.time()-start}')
 
-start=time.time()
 
-with ProcessPoolExecutor(max_workers=2) as pool:
- pool.submit(complex_calculation)
- pool.submit(ask_user)
+if __name__ == '__main__':
+ start=time.time()
+ with ProcessPoolExecutor(max_workers=2) as pool:
+   pool.submit(complex_calculation)
+   pool.submit(complex_calculation)
 
-print(f'Two process total time: {time.time()-start}')
+ print(f'Two process total time: {time.time()-start}')
