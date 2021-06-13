@@ -1,4 +1,6 @@
-class User:
+from savable import Savable
+
+class User(Savable):
     def __init__(self, username, password):
         self.username = username
         self.password = password
@@ -8,3 +10,4 @@ class User:
     
     def __repr__(self):
         return f'<User {self.username}>'
+    
