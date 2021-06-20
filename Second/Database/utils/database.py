@@ -1,31 +1,37 @@
-books_file='Second/Database/utils/books.txt'
 
+from .database_connection import DatabaseConnection
+
+def create_book_table():
+  with DatabaseConnection() as connection:
+    cursor=connection.cursor()
+    cursor.execute('CREATE TABLE books (name text primary key,author text,read boolean)')
+   
+  
 def add_book(name,author):
- with open(books_file,'a') as file:
-  file.write(f"{name},{author},False\n")
+  with DatabaseConnection() as connection:
+      cursor=connection.cursor()
+      cursor.execute('INSERT INTO books VALUES(?,?,False)',(name,author))
+      
+ 
 
 def get_all_books():
- with open(books_file,'r') as file:
-  lines=[line.strip().split(",") for line in file.readlines()]
- return [
-  {'name':line[0],'author':line[1],'read':line[2] } for line in lines
- ]
+   with DatabaseConnection() as connection:
+      cursor=connection.cursor()
+      cursor.execute('SELECT * from books')
+      books=[{'name':row[0],'author':row[1],'read':row[2]} for row in cursor.fetchall()]
 
-def _save_all_books(books):
-  with open(books_file,'w') as file:
-   for book in books:
-    file.write(f"{book['name']},{book['author']},{book['read']}\n")
- 
+      return books
+
+
 def markread(name): 
- books=get_all_books()
- for book in books:
-  if book['name']==name:
-   book['read']=True
- _save_all_books(books)
+  with DatabaseConnection() as connection:
+      cursor=connection.cursor()
+      cursor.execute('UPDATE books SET read=True WHERE name=?',(name,))
+      
    
   
 def delete_book(name):
- books=get_all_books()
- books=[x for x in books if x['name']!=name]
- 
- _save_all_books(books)
+  with DatabaseConnection() as connection:
+      cursor=connection.cursor()
+      cursor.execute('DELETE FROM books WHERE name=?',(name,))
+

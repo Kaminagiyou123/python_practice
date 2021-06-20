@@ -38,6 +38,7 @@ def delete_book():
 
 def menu():
  user_input=input(USER_CHOICE)
+ database.create_book_table()
  while user_input!='q':
   if user_input=='a':
    add_book()
