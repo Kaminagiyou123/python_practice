@@ -1,0 +1,3 @@
+name,age,univeristy,degree
+rolf,25,MIT,ComputerScience
+Anne,34,standford,Art
