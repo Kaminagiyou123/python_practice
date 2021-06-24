@@ -37,7 +37,6 @@ class BookParser():
   return (float(matcher.group(1)))
 
  @property 
- 
  def rating(self):
   locator=BookLocators.RATING_LOCATOR
   start_rating_tag=self.parent.select_one(locator)
